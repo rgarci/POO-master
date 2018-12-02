@@ -5,3 +5,6 @@
 /BankProyect/dist/
 /HouseControl/nbproject/private/
 /HouseControl/build/
+
+/.idea
+.idea/*
