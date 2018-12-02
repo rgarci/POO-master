@@ -9,24 +9,34 @@ package bank.model;
  *
  * @author edgar.cambranes
  */
+
+import bank.Exceptions.NotEnoughBalanceException;
+
 /**
  * @AUTHORS: POO FMAT 
  */
-public class Account{                           
+public class Account{
     public static final String  CREDIT= "CREDIT";
     public static final String DEBIT = "DEBIT";
-    
-    private static int IDkey;
+
     private int IDaccount;
-    private double balance; 
+    private double balance;
     private String typeAccount;
     
-    public Account (String typeAccount, double balance) {               
+    public Account (int IDaccount, String typeAccount, double balance) {
+        this.IDaccount =IDaccount;
+        this.typeAccount = typeAccount;
+        this.balance = balance;
+    }
+
+   /*  ANTES
+    public Account (int IDKey, String typeAccount, double balance) {
         this.IDaccount =IDkey;
         IDkey++;
         this.typeAccount = typeAccount;
         this.balance = balance;
     }
+     */
     
     /*public Account (double balance) {               
         this.IDaccount =IDkey;
@@ -36,14 +46,27 @@ public class Account{
     */
     public double withdraw(double ammount){
         if(balance>=ammount){
+            return balance-=ammount;
+        }
+        throw new NotEnoughBalanceException();
+    }
+
+    /* ANTES
+    public double withdraw(double ammount){
+        if(balance>=ammount){
             balance = balance - ammount;
         }
         return balance;
     }
+     */
     
+    /* ANTES
     public double deposit(double ammount){
-        
         return balance;
+
+    }*/
+    public double deposit(double ammount){
+        return balance+=ammount;
     }
     
     public void setBalance (double balance){
