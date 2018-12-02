@@ -31,25 +31,25 @@ public class Main {
         
         
         //Living
-        living.addDevice(new Device("Aire acondicionado", "LG", "pm07sp", true));
-        living.addDevice(new Device("Luces", "Philips", "Hue", true));
+        living.addDevice(new Device("1", "Aire acondicionado", "LG", "pm07sp", true));
+        living.addDevice(new Device("10", "Luces", "Philips", "Hue", true));
         //Kitchen
-        kitchen.addDevice(new Device("luces","Ahorradoras","34234", true));
+        kitchen.addDevice(new Device("2", "luces","Ahorradoras","34234", true));
         //Bathroom
-        bathroom.addDevice(new Device("luce","simple","354676", true));
+        bathroom.addDevice(new Device("3", "luce","simple","354676", true));
         //Garage
-        garage.addDevice(new Device("lightbulb","the best","X3000",true));
+        garage.addDevice(new Device("4", "lightbulb","the best","X3000",true));
         
         //Bedroom 1
-        bedroom1.addDevice(new Device("Aire acondicionado", "Mabe" , "Mmt12cdbs3", true));
-        bedroom1.addDevice(new Device("Luces","Philips","EcoVantage",true));
+        bedroom1.addDevice(new Device("5", "Aire acondicionado", "Mabe" , "Mmt12cdbs3", true));
+        bedroom1.addDevice(new Device("6", "Luces","Philips","EcoVantage",true));
         
         //Bedroom 2
-        bedroom2.addDevice(new Device("Aire acondicionado", "Hisense" , "AS-12CR5FVETD/1TR", true));
-        bedroom2.addDevice(new Device("Luces","Ho Iluminacion","A19 60W Claro",true));
+        bedroom2.addDevice(new Device("7", "Aire acondicionado", "Hisense" , "AS-12CR5FVETD/1TR", true));
+        bedroom2.addDevice(new Device("8", "Luces","Ho Iluminacion","A19 60W Claro",true));
         
         //baño primer piso
-        bathroom1stf.addDevice(new Device("Luces","Alefco","lw100",true));
+        bathroom1stf.addDevice(new Device("9", "Luces","Alefco","lw100",true));
         
         
         
