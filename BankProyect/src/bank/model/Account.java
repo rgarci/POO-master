@@ -69,9 +69,7 @@ public class Account{
         return balance+=ammount;
     }
     
-    public void setBalance (double balance){
-        this.balance = balance;
-    }
+
     
     public double getBalance (){
         return balance;
