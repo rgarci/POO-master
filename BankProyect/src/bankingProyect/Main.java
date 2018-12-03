@@ -15,6 +15,6 @@ import bank.controller.BankTextController;
 public class Main {
     
    public static void main(String[] args) {
-        new BankUI();
+        new BankUI("./BankProyect/Bank.txt");
    }
 }
