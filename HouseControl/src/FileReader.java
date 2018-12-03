@@ -16,11 +16,10 @@ import java.util.logging.Logger;
  * @author edgar.cambranes
  */
 public class FileReader {
-    
-    Scanner file;
-   
+
+    private Scanner file;
+
     public FileReader(String path){
-        
         try {
             file = new Scanner(new File(path));
         } catch (FileNotFoundException ex) {
@@ -29,23 +28,33 @@ public class FileReader {
         }
         
     }
-    
-    public String getContentFile(){
-     String content = "";
+
+    public String getContentFile() throws stringNulException {
+        String content = "";
         while (file.hasNextLine()) {
-            content+=file.nextLine()+"\n";
+            content+=file.nextLine()+",";
         }
-        file.close();
-    return content;
+        closeFile();
+        if(!content.equals("")){ return content;}
+        throw new stringNulException();
     }
-  
+
     public void closeFile(){
         file.close();
     }
-    
-    
+
     public static void main(String ar[]){
-        System.out.println(new FileReader("Devices.txt").getContentFile());
-    
+        try {
+            System.out.println(new FileReader("\\HouseControl\\Devices.txt").getContentFile());
+        } catch (stringNulException e) {
+            System.out.println("no existen elementos");
+        }
+
+    }
+
+    public class stringNulException extends Throwable {
+        public stringNulException(){
+            System.out.println("La cadena esta vacia, no se encontraron elementos");
+        }
     }
 }

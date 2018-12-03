@@ -29,7 +29,7 @@ public class Device {
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -57,7 +57,7 @@ public class Device {
      * @return the model
      */
     public String getModel() {
-        return model;
+        return this.model;
     }
 
     /**
@@ -71,7 +71,7 @@ public class Device {
      * @return the status
      */
     public boolean getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -91,8 +91,8 @@ public class Device {
 
     public boolean equals(Device device){
         Boolean eqName = this.getName() == device.getName();
-        Boolean eqBrand = this.getBrand() == device.getName();
-        Boolean eqModel =  this.getName() == device.getName();
+        Boolean eqBrand = this.getBrand() == device.getBrand();
+        Boolean eqModel =  this.getModel() == device.getModel();
         return eqName && eqBrand && eqModel;
     }
 

@@ -46,13 +46,6 @@ public class Room {
     }
 
     /**
-     * @param devices the devices to set
-     */
-    public void setDevices(Device[] devices) {
-        this.setDevices(devices);
-    }
-
-    /**
      * @return the name
      */
     public String getName() {
@@ -82,23 +75,22 @@ public class Room {
     }
 
 
-    /*************************************************************/
 
-    public int searchDevice(Device otherDevice) throws ErrorFindingDeviceException {
+    public int searchDevice(Device otherDevice) throws FindingDeviceException {
 
         for(int index=0; index<getDeviceCounter(); index++){
             if(devices.get(index).equals(otherDevice)){
                 return index;
             }
         }
-       throw new  ErrorFindingDeviceException();
+       throw new  FindingDeviceException();
     }
 
     public void removeDevice(Device device){
         try {
             int pos = searchDevice(device);
             devices.remove(pos);
-        } catch (ErrorFindingDeviceException e) {
+        } catch (FindingDeviceException e) {
             System.out.println("el dispositivo no se pudo remover");
         }
     }
@@ -122,8 +114,8 @@ public class Room {
         return this.getName() == nameRoom;
     }
 
-    public class ErrorFindingDeviceException extends Throwable {
-        public ErrorFindingDeviceException() {
+    public class FindingDeviceException extends Throwable {
+        public FindingDeviceException() {
             System.out.println("Dispositivo no encontrado en la habitanción");
         }
     }
