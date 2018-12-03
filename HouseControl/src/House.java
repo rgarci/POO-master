@@ -75,7 +75,7 @@ public int countDevicesOn(){
             ArrayList<Device> devices = rooms.get(j).getDevices();
             int counterDevices = rooms.get(j).getDeviceCounter();
             for(int k=0;k<counterDevices; k++){
-                if(devices.get(k).isStatus() == true){
+                if(devices.get(k).getStatus() == true){
                 devicesOn++;
                 }
             }

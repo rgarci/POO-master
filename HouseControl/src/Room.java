@@ -34,13 +34,7 @@ public class Room {
     }
     
     public void addDevice(Device device){
-        /*boolean flag = false;
-        if(getDeviceCounter() < MAXDEVICES){
-            devices[getDeviceCounter()]=device;
-            setDeviceCounter(getDeviceCounter() + 1);
-            flag = true;
-        }
-       return flag;*/
+
         devices.add(device);
     }
 
@@ -88,58 +82,50 @@ public class Room {
     }
 
 
-    
-    public int searchDevice(Device otherDevice){
-        int index = 0;
-        boolean  flag = false;
-        for(index=0; index<getDeviceCounter() && flag == false; index++){
+    /*************************************************************/
+
+    public int searchDevice(Device otherDevice) throws ErrorFindingDeviceException {
+
+        for(int index=0; index<getDeviceCounter(); index++){
             if(devices.get(index).equals(otherDevice)){
-                flag = true;
-                break;
+                return index;
             }
         }
-        if(flag == false){
-            index = -1;
-        }
-        return index;
+       throw new  ErrorFindingDeviceException();
     }
-    
-    public boolean  removeDevice(Device device){
-        boolean flag = false;
-        int pos =  searchDevice(device);
-        
-        if(pos!=-1){
+
+    public void removeDevice(Device device){
+        try {
+            int pos = searchDevice(device);
             devices.remove(pos);
+        } catch (ErrorFindingDeviceException e) {
+            System.out.println("el dispositivo no se pudo remover");
         }
-        
-        return flag;
-        
     }
-    
+
+
     public void switchOffAllDevices(){
         for(int index=0; index<getDeviceCounter(); index++){
             devices.get(index).switchOffDevice();
         }
     }
+
     
     public void switchOnAllDevices(){
         for(int index=0; index<getDeviceCounter(); index++){
             devices.get(index).switchOnDevice();
         }
     }
-    
-    //Equals Room
-    public boolean equals(Object obj){
-        boolean flag = false;
-        if(obj instanceof Room && obj!= null){
-            Room otherRoom =(Room)obj;
-            if(this.name == otherRoom.name){
-                    flag = true;
-                    }
-            }
-            return flag;
+
+
+    public boolean equalsName(String nameRoom){
+        return this.getName() == nameRoom;
     }
 
-    
+    public class ErrorFindingDeviceException extends Throwable {
+        public ErrorFindingDeviceException() {
+            System.out.println("Dispositivo no encontrado en la habitanción");
+        }
+    }
 }
 

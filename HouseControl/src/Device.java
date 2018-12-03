@@ -43,7 +43,7 @@ public class Device {
      * @return the brand
      */
     public String getBrand() {
-        return brand;
+        return this.brand;
     }
 
     /**
@@ -70,7 +70,7 @@ public class Device {
     /**
      * @return the status
      */
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -80,34 +80,33 @@ public class Device {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
+
+
+    //Self encapsulate field
+
+
     public String toString(){
-        return name+" "+brand+" "+model +" " +status;
+        return this.getName()+" "+this.getBrand()+" "+this.getModel() +" " +this.getStatus();
     }
-    
-    public boolean equals(Object obj){
-        boolean flag = false;
-        if(obj instanceof Device && obj!= null){
-            Device otherDevice =(Device)obj;
-            if(this.name == otherDevice.name &&
-               this.brand == otherDevice.brand && 
-               this.model == otherDevice.model){
-                flag = true;
-            }
-        }
-        return flag;
+
+    public boolean equals(Device device){
+        Boolean eqName = this.getName() == device.getName();
+        Boolean eqBrand = this.getBrand() == device.getName();
+        Boolean eqModel =  this.getName() == device.getName();
+        return eqName && eqBrand && eqModel;
     }
-    
+
     public boolean toggleDevice(){
-        this.status = !(this.status); 
+        this.status = !(this.status);
         return status;
     }
-    
+
     public boolean switchOffDevice(){
         status = false;
         return status;
     }
-    
+
+
     public boolean switchOnDevice(){
         status = true;
         return status;

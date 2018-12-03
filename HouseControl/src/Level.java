@@ -92,9 +92,10 @@ public void addRoom(Room room){
     public void setName(String name) {
         this.name = name;
     }
-    
+
     //searchRoom
-    public int searchRoom(Room otherRoom){
+    /*********************************************************************/
+    public int searchRom(Room otherRoom){
             int index = 0;
             boolean  flag = false;
             for(index=0; index<rooms.size() && flag == false; index++){
@@ -108,9 +109,23 @@ public void addRoom(Room room){
             }
             return index;
         }
-    
+
+    public int searchRoom(Room otherRoom) throws ErrorFindingRoomException {
+
+        for(int index=0; index<rooms.size(); index++){
+            if(rooms.get(index).equals(otherRoom)){
+                return index;
+            }
+        }
+
+        throw new  ErrorFindingRoomException();
+
+    }
+
+
     //removeRoom
-    public boolean RemoveRoom(Room room){
+    /*********************************************************************/
+    public boolean RemoveRom(Room room){
             boolean flag= false;
             int pos= searchRoom(room);
 
@@ -120,7 +135,18 @@ public void addRoom(Room room){
 
             return flag;
     }
-    
+
+    public void RemoveRoom(Room room) {
+        int pos = 0;
+        try {
+            pos = searchRoom(room);
+            rooms.remove(pos);
+        } catch (ErrorFindingRoomException e) {
+            System.out.println("la habitación no se pudo remover");
+        }
+    }
+
+    /*********************************************************************/
     public String toString(){
         String output = "";
         output=output+name +"\n";
@@ -129,22 +155,40 @@ public void addRoom(Room room){
         }
         return output;
     }
-    
-    public boolean switchAllOffRooms(){
+
+
+    /*********************************************************************/
+    public boolean switchAllOffRoms(){
         for(int index=0; index<getRoomCounter(); index++){
             rooms.get(index).switchOffAllDevices();
         }
         return true;
     }
-    
-    public boolean switchAllOnRooms(){
+
+    public void switchAllOffRooms(){
+        for(int index=0; index<getRoomCounter(); index++){
+            rooms.get(index).switchOffAllDevices();
+        }
+    }
+
+
+    /*********************************************************************/
+    public boolean switchAllOnRoms(){
         for(int index=0; index<getRoomCounter(); index++){
             rooms.get(index).switchOnAllDevices();
         }
         return true;
     }
-    
-    public boolean switchOnRoom(Room room){
+
+    public void switchAllOnRooms(){
+        for(int index=0; index<getRoomCounter(); index++){
+            rooms.get(index).switchOnAllDevices();
+        }
+    }
+
+
+    /*********************************************************************/
+    public boolean switchOnRom(Room room){
         boolean flag=false;
         int index;
         index=this.searchRoom(room);
@@ -155,7 +199,18 @@ public void addRoom(Room room){
         return flag;
     }
 
-    public boolean switchOffRoom(Room room){
+    public void switchOnRoom(Room room){
+        try {
+            int index = this.searchRoom(room);
+            rooms.get(index).switchOnAllDevices();
+        } catch (ErrorFindingRoomException e) {
+            System.out.println("no se pudo prender");;
+        }
+    }
+
+
+    /*********************************************************************/
+    public boolean switchOffRom(Room room){
         boolean flag=false;
         int index;
         index=this.searchRoom(room);
@@ -165,6 +220,17 @@ public void addRoom(Room room){
         }
         return flag;
     }
+
+    public void switchOffRoom(Room room){
+        try {
+            int index = this.searchRoom(room);
+            rooms.get(index).switchOffAllDevices();
+        } catch (ErrorFindingRoomException e) {
+            System.out.println("no se pudo apagar ");
+        }
+    }
+
+    /*********************************************************************/
     public boolean levelSwitchOffDevice(Room room, Device device){
        boolean found = false;
        int lRoom = this.searchRoom(room);
@@ -180,23 +246,66 @@ public void addRoom(Room room){
        }
        return found;
     }
-    
-    public boolean levelSwitchOnDevice(Room room, Device device){
-       boolean found = false;
-       int lRoom = this.searchRoom(room);
-       if(lRoom > -1){
+
+    public void levelSwitchOffDeviceRoom(Room room, Device device){
+        try {
+           int lRoom = this.searchRoom(room);
             ArrayList<Device> d;
             d = rooms.get(lRoom).getDevices();
             int lDevice = rooms.get(lRoom).searchDevice(device);
-            
+            d.get(lDevice).switchOffDevice();
+        } catch (ErrorFindingRoomException | Room.ErrorFindingDeviceException e) {
+
+        }
+
+    }
+
+    /*********************************************************************/
+
+    public Device levelSearchDeviceOnRoom (Room room, Device device){
+        try {
+            int lRoom = this.searchRoom(room);
+            ArrayList<Device> d;
+            d = rooms.get(lRoom).getDevices();
+            int lDevice = rooms.get(lRoom).searchDevice(device);
+            device=d.get(lDevice);
+        } catch (ErrorFindingRoomException | Room.ErrorFindingDeviceException e) {
+
+        }
+
+    }
+
+    /*************************************************************/
+    public boolean levelSwitchOnDevice(Room room, Device device){
+        boolean found = false;
+        int lRoom = this.searchRoom(room);
+        if(lRoom > -1){
+            ArrayList<Device> d;
+            d = rooms.get(lRoom).getDevices();
+            int lDevice = rooms.get(lRoom).searchDevice(device);
+
             if(lDevice > -1)
                 d.get(lDevice).switchOnDevice();
             else
                 found = true;
-       }
-       return found;
+        }
+        return found;
     }
-    
+
+    public void levelSwitchOnDeviceRoom(Room room, Device device){
+        try {
+            int lRoom = this.searchRoom(room);
+            ArrayList<Device> d;
+            d = rooms.get(lRoom).getDevices();
+            int lDevice = rooms.get(lRoom).searchDevice(device);
+            d.get(lDevice).switchOnDevice();
+        } catch (ErrorFindingRoomException | Room.ErrorFindingDeviceException e) {
+
+        }
+
+    }
+
+    /*********************************************************************/
     public void switchAllOffSameDevices(String nameDevices){//Nuevo
       for(int i=0; i<rooms.size(); i++){
           ArrayList<Device> devices = rooms.get(i).getDevices();
@@ -207,7 +316,9 @@ public void addRoom(Room room){
           }
       }          
   }
-  
+
+
+    /*********************************************************************/
     public boolean equals(Object obj){
         boolean flag = false;
         if(obj instanceof Level && obj!= null){
@@ -218,5 +329,16 @@ public void addRoom(Room room){
         }
         return flag;
     }
-    
+
+    public boolean equalsName(String nameLevel){
+        return  this.getName() == nameLevel;
+    }
+
+
+    private class ErrorFindingRoomException extends Throwable {
+        public ErrorFindingRoomException() {
+            System.out.println("Habitación no encontrada");
+        }
+    }
+
 }
