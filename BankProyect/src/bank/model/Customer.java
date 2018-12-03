@@ -5,12 +5,14 @@
  */
 package bank.model;
 
+import bank.Exceptions.AccountNotExistentException;
+import bank.Exceptions.FullAccountsCapacityException;
+
 /**
  *
  * @author edgar.cambranes
  */
 public class Customer{
-    private static int IDkey;
     private int IDCustomer;
     private String firstName;
     private String lastName;
@@ -18,13 +20,24 @@ public class Customer{
     private int numberOfAccounts;
     
        
-    public Customer (String firstName, String lastName) {
+
+    /* ANTES
+    public Customer (int IDCustomer, String firstName, String lastName) {
         this.IDCustomer =IDkey;
         IDkey++;
         this.firstName = firstName;
         this.lastName = lastName;
     }
+     */
     
+    public Customer (int IDCustomer,String firstName, String lastName, int maxAccounts) {
+        this.IDCustomer =IDCustomer;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accounts = new Account[maxAccounts];
+    }
+
+    /*  ANTES
     public Customer (String firstName, String lastName, int maxAccounts) {
         this.IDCustomer =IDkey;
         IDkey++;
@@ -32,24 +45,27 @@ public class Customer{
         this.lastName = lastName;
         this.accounts = new Account[maxAccounts];
     }
+     */
+
     public int getIDCustomer(){
         return IDCustomer;
-    }
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
     }
     
     public String getFirstName(){
         return this.firstName;
     }
     
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }
-    
     public String getLastName(){
         return this.lastName;
     }
+    public void addAccount(Account account){
+        if(numberOfAccounts < accounts.length ){
+            accounts[numberOfAccounts++] = account;
+        }else{
+            throw new FullAccountsCapacityException();
+        }
+    }
+    /* ANTES
     public boolean addAccount(Account account){
         boolean flag = false;
         if(numberOfAccounts < accounts.length ){
@@ -59,7 +75,22 @@ public class Customer{
         }
         return flag;
     }
-    
+     */
+    public void removeAccount(int IDAccount){
+        accounts[getAccountIndex(IDAccount)] = accounts[numberOfAccounts-1];
+        accounts[numberOfAccounts-1] = null;
+        numberOfAccounts--;
+    }
+
+    private int getAccountIndex(int IDAccount){
+        for (int i = 0; i < numberOfAccounts; i++) {
+            if (accounts[i].getIDAccount() == IDAccount){
+                return i;
+            }
+        }
+        throw new AccountNotExistentException();
+    }
+    /* ANTES
     public boolean removeAccount(int IDAccount){
         boolean flag = false;
             for(int i = 0; i < numberOfAccounts; i++){
@@ -70,37 +101,23 @@ public class Customer{
                     flag = true;
                 }
             }
-        
+
         return flag;
     }
-    
-    public Account searchAccount(int IDAccount){
-        Account temp = null;
+
+     */
+    public Account getAccountByID(int IDAccount){
         for(Account account: accounts){
             if(account.getIDAccount() == IDAccount){
-                temp = account;
+                return account;
             }
         }
-        return temp;
+        throw new AccountNotExistentException();
     }
+
     
-    public Account getAccount(int IDAccount){                
-        return searchAccount(IDAccount);
-    }
-    
-    
-    
-    
-    public boolean equals(Object obj){
-        boolean flag = false;
-        if (obj != null && obj instanceof Customer){
-            Customer customerTemp = (Customer)obj;
-            if(this.IDCustomer == customerTemp.IDCustomer){
-                flag = true;
-            }
-        }
-        
-        return flag;
+    public boolean hasSameID(int IDOtherCustomer){
+        return (this.IDCustomer == IDOtherCustomer);
     }
     
     public String toString(){
@@ -109,9 +126,9 @@ public class Customer{
                " ,Last Name: " + this.lastName + "\n" +
                "Accounts:" + "\n";
         
-                for(int i = 0; i < numberOfAccounts; i++){
-                output += accounts[i].toString() +"\n";
-                }
+        for(int i = 0; i < numberOfAccounts; i++){
+        output += accounts[i].toString() +"\n";
+        }
         return output;
     }
 

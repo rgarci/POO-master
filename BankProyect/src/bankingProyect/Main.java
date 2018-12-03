@@ -6,6 +6,7 @@
 package bankingProyect;
 
 import bank.UI.BankUI;
+import bank.controller.BankTextController;
 
 /**
  *
@@ -14,8 +15,6 @@ import bank.UI.BankUI;
 public class Main {
     
    public static void main(String[] args) {
-        new BankUI();
-   
+        new BankUI("./BankProyect/Bank.txt");
    }
-    
 }

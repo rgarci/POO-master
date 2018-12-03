@@ -5,6 +5,7 @@
  */
 package bank.UI;
 
+import bank.Exceptions.CustomerNotExistentException;
 import bank.controller.BankTextController;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -17,14 +18,16 @@ import javax.swing.table.DefaultTableModel;
 public class BankUI extends javax.swing.JFrame {
 
     private DefaultTableModel modelo = new DefaultTableModel();
+    private final String filePath;
     /**
      * Creates new form Ui
      */
-    public BankUI() {
+    public BankUI(String filePath) {
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setTitle("Proyecto Banco");
+        this.filePath = filePath;
         //cargarModeloTabla();
     }
 
@@ -165,17 +168,17 @@ public class BankUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String key;
         key = jTextField1.getText();
-        /*BankTextController control = new BankTextController(); 
-        //Llama a la funcion de controller que busca el elemento en el HashTable
-        String[][] table = control.getHashTable(key);
-        //Si el elemento existe, lo coloca en la tabla
-        if(table!=null){
+        try{
+            BankTextController control = new BankTextController();
+            //Llama a la funcion de controller que busca el elemento en el HashTable
+            String[][] table = control.findCustomertoShow(key, filePath);
+            //Si el elemento existe, lo coloca en la tabla
             cargarModeloTabla(table);
         }
         //Si el elemento no existe, crea una ventana mostrando que el elemento no existe
-        else{
+        catch (CustomerNotExistentException cnee){
             JOptionPane.showMessageDialog(this, "Key not found", "Error", JOptionPane.WARNING_MESSAGE);
-        }*/
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Este metodo carga el modewlo la tabla

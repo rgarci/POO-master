@@ -6,6 +6,8 @@
 package bank.controller;
 
 import java.util.ArrayList;
+
+import bank.Exceptions.CustomerNotExistentException;
 import bank.model.BankTextReader;
 import java.util.Hashtable;
 
@@ -16,6 +18,30 @@ import java.util.Hashtable;
 public class BankTextController {
     
     
+    public String[][] getTableInfoFromBankText(String Filename){
+
+        ArrayList<String> input = (new BankTextReader()).getLinesFromBankText(Filename);
+        String[][] output = new String[input.size()][4];
+        String array;
+        String accounts;
+        String[] split;
+        for(int i=0;i<input.size();i++){
+            array = input.get(i);
+            split = array.split(",");
+            accounts = split[3];
+            for(int j=6;j<split.length;j++){
+                accounts = accounts + ", " + split[j];
+                j = j + 2;
+            }
+            output[i][3] = accounts;
+            for(int j=0;j<3;j++){
+                output[i][j] = split[j];
+            }
+        }
+        return output;
+    }
+    /*
+    ANTES
     public String[][] getTable(String Filename){
         int i,j;
         BankTextReader bankBuilder = new BankTextReader();
@@ -40,15 +66,51 @@ public class BankTextController {
         }
         return output;
     }
+     */
     
     public String[] getHeader(){
         String[] header = {"ID","First Name","Last Name","Accounts"};
         return header;
     }
+    /*
+    ANTES
+    public String[] getHeader(){
+        String[] header = {"ID","First Name","Last Name","Accounts"};
+        return header;
+    }
+     */
     
     //Recibe un hashTable y busca una key, si existe, regresa una tabla con
     //la informacion del resultado de la busqueda. Si no existe, regresa
     //un apuntador null
+    public String[][] findCustomertoShow(String name, String filename) throws CustomerNotExistentException{
+        String[][] output = new String[1][4];
+        String line = findCustomerInList(name, filename);
+        //y lo divide en los elementos necesarios para mostrarlo en una tabla
+        String[] split = line.split(",");
+        //colocandolos en la matriz output
+        for(int j=0;j<3;j++){
+            output[0][j] = split[j];
+        }
+        //acomoda todos los IDAccount en un solo elemento de la matriz
+        String accounts = split[3];
+        for(int j=6;j<split.length;j++){
+            accounts = accounts + ", " + split[j];
+            j = j + 2;
+        }
+        output[0][3] = accounts;
+        return output;
+    }
+    private String findCustomerInList(String name,String filename){
+        Hashtable<String,String> input = (new BankTextReader()).getTableOfNamesFromFile(filename);
+        if (input.containsKey(name)){
+            return input.get(name);
+        }
+        throw new CustomerNotExistentException();
+
+    }
+    /*
+    ANTES
     public String[][] getHashTable(String key)
     {
         int j;
@@ -82,4 +144,5 @@ public class BankTextController {
         }
         return output;
     }
+     */
 }
