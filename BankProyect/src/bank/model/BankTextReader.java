@@ -62,7 +62,7 @@ public class BankTextReader {
 
     private String extractNameFromLine(String line){
         String[] split = line.split(",", 4);
-        return split[1] + split[2];
+        return (split[1] + split[2]);
     }
    /*
    ANTES
