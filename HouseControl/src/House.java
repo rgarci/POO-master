@@ -41,7 +41,7 @@ public class House {
         return levels.size();
     }
 
-    public int searchLevel(String name) throws FindingLevelException {
+    public int searchLevel(String name){
         for(int index=0; index<levels.size(); index++){
             if(levels.get(index).equals(new Level(name))){
                 return index;
@@ -82,7 +82,7 @@ public class House {
             return output;
     }
 
-    private class FindingLevelException extends Throwable {
+    private class FindingLevelException extends RuntimeException {
         public FindingLevelException() {
             System.out.println("Nivel no encontrado");
         }

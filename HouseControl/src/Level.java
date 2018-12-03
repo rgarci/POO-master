@@ -77,7 +77,7 @@ public class Level {
         this.name = name;
     }
 
-    public int searchRoom(Room otherRoom) throws FindingRoomException {
+    public int searchRoom(Room otherRoom){
         for (int index = 0; index < rooms.size(); index++) {
             if (rooms.get(index).equals(otherRoom)) {
                 return index;
@@ -143,7 +143,7 @@ public class Level {
         }
     }
 
-    public Device levelSearchDeviceOnRoom (Room room, Device device) throws FindingRoomException, Room.FindingDeviceException {
+    public Device levelSearchDeviceOnRoom (Room room, Device device){
         int lRoom = this.searchRoom(room);
         ArrayList<Device> d;
         d = rooms.get(lRoom).getDevices();
@@ -216,7 +216,7 @@ public class Level {
         return  this.getName() == nameLevel;
     }
 
-    private class FindingRoomException extends Throwable {
+    private class FindingRoomException extends RuntimeException{
         public FindingRoomException() {
             System.out.println("Habitación no encontrada");
         }

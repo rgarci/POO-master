@@ -76,7 +76,7 @@ public class Room {
 
 
 
-    public int searchDevice(Device otherDevice) throws FindingDeviceException {
+    public int searchDevice(Device otherDevice){
 
         for(int index=0; index<getDeviceCounter(); index++){
             if(devices.get(index).equals(otherDevice)){
@@ -114,7 +114,7 @@ public class Room {
         return this.getName() == nameRoom;
     }
 
-    public class FindingDeviceException extends Throwable {
+    public class FindingDeviceException extends RuntimeException {
         public FindingDeviceException() {
             System.out.println("Dispositivo no encontrado en la habitanción");
         }

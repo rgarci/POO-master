@@ -29,7 +29,7 @@ public class FileReader {
         
     }
 
-    public String getContentFile() throws stringNulException {
+    public String getContentFile(){
         String content = "";
         while (file.hasNextLine()) {
             content+=file.nextLine()+",";
@@ -52,7 +52,7 @@ public class FileReader {
 
     }
 
-    public class stringNulException extends Throwable {
+    public class stringNulException extends RuntimeException {
         public stringNulException(){
             System.out.println("La cadena esta vacia, no se encontraron elementos");
         }

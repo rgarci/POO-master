@@ -30,7 +30,7 @@ public class DeviceParsing {
 
     }
 
-    public void readContent() throws FileReader.stringNulException {
+    public void readContent(){
         FileReader fr =new FileReader("HouseControl/Devices.txt");
         content = fr.getContentFile();
     }
