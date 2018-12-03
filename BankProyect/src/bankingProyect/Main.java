@@ -6,6 +6,7 @@
 package bankingProyect;
 
 import bank.UI.BankUI;
+import bank.controller.BankTextController;
 
 /**
  *
@@ -14,8 +15,15 @@ import bank.UI.BankUI;
 public class Main {
     
    public static void main(String[] args) {
-        new BankUI();
-   
+        //new BankUI();
+       BankTextController bankTextController = new BankTextController();
+       String[][] table = bankTextController.getHashTable("MariaMagdalena");
+       for (int i = 0; i < 1; i++) {
+           for (int j = 0; j < 4; j++) {
+               System.out.print(table[i][j]);
+           }
+           System.out.println("\n");
+       }
    }
     
 }
